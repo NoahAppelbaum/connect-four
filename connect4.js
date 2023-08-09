@@ -92,9 +92,9 @@ function placeInTable(y, x) {
   const piece = document.createElement("div");
   piece.classList.add("piece", `p${currPlayer}`);
 
-  const currentCell = document.getElementById(`c-${y}-${x}`);
+  const currentCell = document.querySelector(`#c-${y}-${x}`);
   console.log(`current cell ${currentCell}`);
-  currentCell.innerHTML=piece;
+  currentCell.append(piece);
 }
 
 /** endGame: announce game end */
@@ -107,10 +107,12 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id;
+  //top-
+  const x = +evt.target.id.slice(4);
+  console.log(evt.target.id[length - 1]);
 
   // get next spot in column (if none, ignore click)
-  var y = findSpotForCol(x);
+  const y = findSpotForCol(x);
   if (y === null) {
     return;
   }
