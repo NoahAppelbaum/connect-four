@@ -80,8 +80,18 @@ function makeTopRow() {
 /** findSpotForCol: given column x, return bottom empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 5
-  return 5;
+
+  //iterate backwards from the column height
+  //look for 1 or 2
+  //if it's empty, return our iterater
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    if (!BOARD[y][x]) {
+      return y;
+    }
+  }
+
+  //if we get to the end of the loop, return null
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -95,6 +105,9 @@ function placeInTable(y, x) {
   const currentCell = document.querySelector(`#c-${y}-${x}`);
   console.log(`current cell ${currentCell}`);
   currentCell.append(piece);
+
+  //also update JS BOARD
+  BOARD[y][x] = currPlayer;
 }
 
 /** endGame: announce game end */
@@ -118,7 +131,6 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
   placeInTable(y, x);
 
   // check for win
