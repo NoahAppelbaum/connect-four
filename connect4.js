@@ -105,9 +105,6 @@ function placeInTable(y, x) {
   const currentCell = document.querySelector(`#c-${y}-${x}`);
   console.log(`current cell ${currentCell}`);
   currentCell.append(piece);
-
-  //also update JS BOARD
-  BOARD[y][x] = currPlayer;
 }
 
 /** endGame: announce game end */
@@ -132,6 +129,9 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   placeInTable(y, x);
+  //also update JS BOARD
+  BOARD[y][x] = currPlayer;
+
 
   // check for win
   if (checkForWin()) {
