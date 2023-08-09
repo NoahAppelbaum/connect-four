@@ -29,37 +29,52 @@ function makeBoard() {
 function makeHtmlBoard() {
   var htmlBoard = document.getElementById('board');
 
-  // TODO: add comment for this code
-  var top = document.createElement("tr");
-  top.setAttribute("id", "column-top");
 
-  // TODO: add comment for this code
-  for (var x = 0; x < WIDTH; x++) {
-    var headCell = document.createElement("td");
-    headCell.setAttribute("id", `top-${x}`);
-    headCell.addEventListener("click", handleClick);
-    top.append(headCell);
-  }
-  htmlBoard.append(top);
+
+  htmlBoard.append(makeTopRow());
 
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
-  for (var y = 0; y < HEIGHT; y++) {
-    // TODO: Create a table row element and assign to a "row" variable
 
-    for (var x = 0; x < WIDTH; x++) {
-      // TODO: Create a table cell element and assign to a "cell" variable
+  for (var y = 0; y < HEIGHT; y++) { //for each row
+    // Create a table row element and assign to a "row" variable
+    let row = document.createElement("tr");
 
-      // TODO: add an id, c-y-x, to the above table cell element
+    for (var x = 0; x < WIDTH; x++) { //for each column
+      // Create a table cell element and assign to a "cell" variable
+      let cell = document.createElement("td");
+
+      // add an id, c-y-x, to the above table cell element
+      cell.id = `c-${y}-${x}`;
       // you'll use this later, so make sure you use c-y-x
 
-      // TODO: append the table cell to the table row
+      // append the table cell to the table row
+      row.append(cell);
 
     }
-    // TODO: append the row to the html board
+    //  append the row to the html board
+    htmlBoard.append(row);
 
   }
+}
+
+/**Creates top row of html board based on gloabl WIDTH */
+function makeTopRow() {
+  // create the top row of the playing board in html
+  const top = document.createElement("tr");
+  top.setAttribute("id", "column-top");
+
+  // Loops through WIDTH and creates clickable cells for the top row
+  for (let i = 0; i < WIDTH; i++) {
+    let headCell = document.createElement("td");
+    headCell.setAttribute("id", `top-${i}`);
+    headCell.addEventListener("click", handleClick);
+    top.append(headCell);
+  }
+
+  return top;
+
 }
 
 /** findSpotForCol: given column x, return bottom empty y (null if filled) */
