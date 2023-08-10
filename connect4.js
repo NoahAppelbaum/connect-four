@@ -139,15 +139,42 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
+  checkForTie();
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
+  switchPlayers()
+
+
+
+
+}
+
+/** switchPlayers: switch between player 1 and 2 on each turn */
+function switchPlayers() {
+  if (currPlayer === 1) {
+    currPlayer = 2;
+  }
+
+  if (currPlayer === 2) {
+    currPlayer = 1;
+  }
+}
+
+
+/**checkForTie: check if whole board is full by checking top row  */
+
+function checkForTie() {
+  // check if all cells in board are filled; if so call, call endGame
+  if (BOARD[0].every(cell => cell)) {
+    endGame();
+  }
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
 function checkForWin() {
+
 
   /** _win:
    * takes input array of 4 cell coordinates [ [y, x], [y, x], [y, x], [y, x] ]
@@ -156,9 +183,9 @@ function checkForWin() {
    */
   function _win(cells) {
 
-    // TODO: Check four cells to see if they're all legal & all color of current
+    // Check four cells to see if they're all legal & all color of current
     // player
-
+    return cells.every(cell => BOARD[cell[0]][cell[1]] === currPlayer);
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -172,9 +199,9 @@ function checkForWin() {
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert;
-      let diagDL;
-      let diagDR;
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      let diagDL = [[y, x], [y - 1, x - 1], [y - 2, x - 2], [y - 3, x - 3]];
+      let diagDR = [[y, x], [y - 1, x + 1], [y - 2, x + 2], [y - 3, x + 3]];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
