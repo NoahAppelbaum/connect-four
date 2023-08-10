@@ -224,30 +224,23 @@ function checkForWin() {
   }
 }
 
+/**Removes existing data from board */
 function destroyJSBoard() {
   for (let i = 0; i < HEIGHT; i++) {
     board.pop();
   }
 }
 
+/**Clears any placed pieces from html Board */
 function clearHtmlBoard() {
-  // const htmlBoard = document.querySelector("#board");
-  // console.log(htmlBoard.childNodes);
-  // for (let element of Array.from(htmlBoard.childNodes)) {
-  //   htmlBoard.remove(element);
-  // }
-  // const htmlBoard = document.querySelector("#board");
-  // const rows = document.querySelectorAll("tr");
-  // for (let tR of Array.from(rows)) {
-  //   htmlBoard.remove(tR);
-  // }
+
   const cells = document.querySelectorAll("td");
   for (let cell of Array.from(cells)) {
     cell.innerHTML = "";
   }
 }
 
-
+/**calls functions to clear and reset game, reassigns first player */
 function restartGame() {
   destroyJSBoard();
   clearHtmlBoard();
