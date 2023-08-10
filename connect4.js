@@ -100,14 +100,28 @@ function placeInTable(y, x) {
   // make a div and insert into correct table cell
   console.log(`place in table was called!`);
   const piece = document.createElement("div");
-  piece.classList.add("piece", `p${currPlayer}`, "fling");
+  piece.classList.add("piece", `p${currPlayer}`,);
 
   const currentCell = document.querySelector(`#c-${y}-${x}`);
   console.log(`current cell ${currentCell}`);
+  stochasticFling(piece);
   currentCell.append(piece);
+}
+
+function stochasticFling(piece) {
+
+  piece.style.transform = `translate(${getRandomViewportOrigin()}vw,${getRandomViewportOrigin()}vh)`;
+
   setTimeout(function () {
-    piece.classList.remove("fling");
-  }, 1);
+    piece.style.transform = "translateY(-60%)";
+  }, 10);
+}
+
+function getRandomViewportOrigin() {
+  //rand x 100
+  //rand 50/50 pos/neg
+  let randPercent = Math.random() * 100;
+  return (Math.random() > 0.5 ? randPercent : -randPercent);
 }
 
 /** endGame: announce game end */

@@ -40,7 +40,3 @@
 #column-top td:hover {
   background-color: gold;
 }
-
-.fling {
-  transform: translate(100vw, 100vh);
-}
