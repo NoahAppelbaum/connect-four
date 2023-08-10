@@ -4,6 +4,7 @@
   width: 50px;
   height: 50px;
   border: solid 1px #666;
+  position: relative;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
@@ -14,6 +15,11 @@
   margin: 5px;
   width: 80%;
   height: 80%;
+  position: absolute;
+  transform: translateY(-60%);
+
+  transition-property: transform;
+  transition-duration: .5s;
 }
 
 /* make pieces red/blue,  depending on player 1/2 piece */
@@ -33,4 +39,8 @@
 
 #column-top td:hover {
   background-color: gold;
+}
+
+.fling {
+  transform: translate(100vw, 100vh);
 }

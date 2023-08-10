@@ -11,7 +11,7 @@ const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
-const BOARD = []; // array of rows, each row is array of cells  (board[y][x])
+const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
@@ -20,14 +20,14 @@ const BOARD = []; // array of rows, each row is array of cells  (board[y][x])
 function makeBoard() {
   //  set "board" to empty HEIGHT x WIDTH matrix array
   for (let row = 0; row < HEIGHT; row++) {
-    BOARD.push(Array(WIDTH).fill(null));
+    board.push(Array(WIDTH).fill(null));
   }
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  var htmlBoard = document.getElementById('board');
+  let htmlBoard = document.getElementById('board');
 
 
 
@@ -85,7 +85,7 @@ function findSpotForCol(x) {
   //look for 1 or 2
   //if it's empty, return our iterater
   for (let y = HEIGHT - 1; y >= 0; y--) {
-    if (!BOARD[y][x]) {
+    if (!board[y][x]) {
       return y;
     }
   }
@@ -100,11 +100,14 @@ function placeInTable(y, x) {
   // make a div and insert into correct table cell
   console.log(`place in table was called!`);
   const piece = document.createElement("div");
-  piece.classList.add("piece", `p${currPlayer}`);
+  piece.classList.add("piece", `p${currPlayer}`, "fling");
 
   const currentCell = document.querySelector(`#c-${y}-${x}`);
   console.log(`current cell ${currentCell}`);
   currentCell.append(piece);
+  setTimeout(function () {
+    piece.classList.remove("fling");
+  }, 1);
 }
 
 /** endGame: announce game end */
@@ -130,7 +133,7 @@ function handleClick(evt) {
   // place piece in board and add to HTML table
   placeInTable(y, x);
   //also update JS BOARD
-  BOARD[y][x] = currPlayer;
+  board[y][x] = currPlayer;
 
 
   // check for win
@@ -164,7 +167,7 @@ function switchPlayers() {
 
 function checkForTie() {
   // check if all cells in board are filled; if so call, call endGame
-  if (BOARD[0].every(cell => cell)) {
+  if (board[0].every(cell => cell)) {
     endGame();
   }
 
@@ -189,7 +192,7 @@ function checkForWin() {
       cell[1] < WIDTH &&
       cell[1] >= 0)) {
 
-      return cells.every(cell => BOARD[cell[0]][cell[1]] === currPlayer);
+      return cells.every(cell => board[cell[0]][cell[1]] === currPlayer);
     } else {
       return false;
     }
@@ -199,8 +202,8 @@ function checkForWin() {
   // using HEIGHT and WIDTH, generate "check list" of coordinates
   // for 4 cells (starting here) for each of the different
   // ways to win: horizontal, vertical, diagonalDR, diagonalDL
-  for (var y = 0; y < HEIGHT; y++) {
-    for (var x = 0; x < WIDTH; x++) {
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
       //
       // each should be an array of 4 cell coordinates:
       // [ [y, x], [y, x], [y, x], [y, x] ]
