@@ -109,8 +109,8 @@ function placeInTable(y, x) {
 
 /** endGame: announce game end */
 
-function endGame(msg) {
-  // TODO: pop up alert message
+function endGame(message) {
+  alert(message);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -142,7 +142,7 @@ function handleClick(evt) {
   checkForTie();
 
   // switch players
-  switchPlayers()
+  switchPlayers();
 
 
 
@@ -151,11 +151,10 @@ function handleClick(evt) {
 
 /** switchPlayers: switch between player 1 and 2 on each turn */
 function switchPlayers() {
+  console.log("switching players");
   if (currPlayer === 1) {
     currPlayer = 2;
-  }
-
-  if (currPlayer === 2) {
+  } else {
     currPlayer = 1;
   }
 }
@@ -185,7 +184,16 @@ function checkForWin() {
 
     // Check four cells to see if they're all legal & all color of current
     // player
-    return cells.every(cell => BOARD[cell[0]][cell[1]] === currPlayer);
+    if (cells.every(cell => cell[0] < HEIGHT &&
+      cell[0] >= 0 &&
+      cell[1] < WIDTH &&
+      cell[1] >= 0)) {
+
+      return cells.every(cell => BOARD[cell[0]][cell[1]] === currPlayer);
+    } else {
+      return false;
+    }
+
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -193,8 +201,7 @@ function checkForWin() {
   // ways to win: horizontal, vertical, diagonalDR, diagonalDL
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
-      // TODO: assign values to the below variables for each of the ways to win
-      // horizontal has been assigned for you
+      //
       // each should be an array of 4 cell coordinates:
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
