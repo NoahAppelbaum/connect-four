@@ -37,11 +37,11 @@ function makeHtmlBoard() {
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
 
-  for (var y = 0; y < HEIGHT; y++) { //for each row
+  for (let y = 0; y < HEIGHT; y++) { //for each row
     // Create a table row element and assign to a "row" variable
     let row = document.createElement("tr");
 
-    for (var x = 0; x < WIDTH; x++) { //for each column
+    for (let x = 0; x < WIDTH; x++) { //for each column
       // Create a table cell element and assign to a "cell" variable
       let cell = document.createElement("td");
 
@@ -114,6 +114,9 @@ function placeInTable(y, x) {
 
 function endGame(message) {
   alert(message);
+  if (confirm("New Game?")) {
+    restartGame();
+  }
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -219,6 +222,39 @@ function checkForWin() {
       }
     }
   }
+}
+
+function destroyJSBoard() {
+  for (let i = 0; i < HEIGHT; i++) {
+    board.pop();
+  }
+}
+
+function clearHtmlBoard() {
+  // const htmlBoard = document.querySelector("#board");
+  // console.log(htmlBoard.childNodes);
+  // for (let element of Array.from(htmlBoard.childNodes)) {
+  //   htmlBoard.remove(element);
+  // }
+  // const htmlBoard = document.querySelector("#board");
+  // const rows = document.querySelectorAll("tr");
+  // for (let tR of Array.from(rows)) {
+  //   htmlBoard.remove(tR);
+  // }
+  const cells = document.querySelectorAll("td");
+  for (let cell of Array.from(cells)) {
+    cell.innerHTML = "";
+  }
+}
+
+
+function restartGame() {
+  destroyJSBoard();
+  clearHtmlBoard();
+  makeBoard();
+
+  currPlayer = 1;
+
 }
 
 makeBoard();
